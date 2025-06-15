@@ -1,0 +1,1388 @@
+@charset "UTF-8";
+/**
+*  Theme Name: Green Theme
+*  Theme URI: http://dvatabuka.site/themes/greentheme/
+*  Author: Joro Nikolov
+*  Author URI: http://dvatabuka.site/
+*  Description: Responsive theme 
+*  Version: 2.3.8
+*  License: GNU General Public License v2 or later
+*  License URI: http://www.gnu.org/licenses/gpl-2.0.html
+*  Text Domain:greentheme
+*  Tags: two-columns, right-sidebar
+*/
+@viewport {
+    zoom: 1.0;
+}
+
+@-ms-viewport {
+    width: extend-to-zoom;
+    zoom: 1.0;
+}
+
+@font-face {
+    font-family: 'Candara-db';
+    src: url('https://dvatabuka.eu/wp-content/themes/greentheme/fonts/CANDARA.TTF') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Calibri-db';
+    src: url('https://dvatabuka.eu/wp-content/themes/greentheme/fonts/CALIBRI.TTF') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'SegoeUI-db';
+    src: url('https://dvatabuka.eu/wp-content/themes/greentheme/fonts/segoeui.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('https://dvatabuka.eu/wp-content/themes/greentheme/fonts/glyphicons-halflings-regular.eot');
+    src: url('https://dvatabuka.eu/wp-content/themes/greentheme/fonts/glyphicons-halflings-regular.eot#iefix') format('embedded-opentype'), url('https://dvatabuka.eu/wp-content/themes/greentheme/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('https://dvatabuka.eu/wp-content/themes/greentheme/fonts/glyphicons-halflings-regular.woff') format('woff'), url('https://dvatabuka.eu/wp-content/themes/greentheme/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('https://dvatabuka.eu/wp-content/themes/greentheme/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+    font-display: swap;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font: normal 87.5%/1.5 Tahoma, Verdana, Arial, sans-serif;
+    color: #dadada;
+    background: #c1d825 url(https://dvatabuka.eu/wp-content/themes/greentheme/images/body-background.jpg) no-repeat center 0 fixed;
+    background-size: cover;
+}
+
+html,
+body,
+header,
+nav,
+section,
+article,
+aside,
+footer,
+div,
+p,
+ol,
+ul,
+li,
+a,
+img,
+span,
+strong,
+em,
+form,
+input,
+button,
+textarea,
+select,
+fieldset,
+figure,
+figcaption,
+legend,
+label,
+table,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+    outline: 0 none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.section-name,
+.quote-bar,
+.green-bar,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h12,
+.h14,
+.h16,
+.h17,
+.h18,
+.h20,
+.h22 {
+    font-family: Candara-db, Calibri-db, SegoeUI-db, Arial, sans-serif;
+    font-weight: normal;
+    line-height: 1.1;
+}
+
+.h28 {
+    font-size: 2em;
+}
+
+.h26 {
+    font-size: 1.857142857142857em;
+}
+
+.h24 {
+    font-size: 1.714285714285714em;
+}
+
+.h22,
+h1 {
+    font-size: 1.571428571428571em;
+}
+
+.h20,
+h2 {
+    font-size: 1.428571428571429em;
+}
+
+.h18,
+h3 {
+    font-size: 1.285714285714286em;
+}
+
+.h17 {
+    font-size: 1.214285714285714em;
+}
+
+.h16,
+h4 {
+    font-size: 1.142857142857143em;
+}
+
+.h14,
+h5 {
+    font-size: 1em;
+}
+
+.h12,
+h6 {
+    font-size: 0.8571428571428571em;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ol {
+    margin-left: 2%;
+    list-style: none;
+    counter-reset: item;
+ }
+ol li {
+    counter-increment: item;
+    margin-bottom: .665%;
+ }
+ol li:before {
+    margin-right: 1.33%;
+    padding: 0 2px;
+    min-width:3%;
+    display: inline-block;
+    content: counter(item);
+    border-radius: 100%;
+    color: #000000;
+    font-weight:bold;
+    text-align: center;
+    background-color: rgba(193, 216, 37, 0.7);
+ }
+
+a {
+    color: #f67f00;
+    text-decoration: none;
+}
+
+img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    border: 0;
+}
+
+input {
+    border: 0 none;
+    font-size: 1em;
+    font-family: sans-serif;
+    line-height: normal;
+    vertical-align: baseline;
+}
+
+input[type="search"] {
+    -webkit-appearance: textfield;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+article header {
+    margin-bottom: 1.33%;
+    border-bottom: 1px solid #c1d825;
+}
+
+#wrapper {
+    width: 80%;
+    max-width: 1150px;
+    margin: 0 auto;
+    padding-top: 1px;
+}
+
+#header,
+#main,
+#footer {
+    margin-top: 2.33%;
+}
+
+#main {
+    padding-bottom: 25px;
+}
+
+.clearfix:after {
+    clear: both;
+    content: "";
+    display: block;
+    height: 0;
+}
+
+.site-bg {
+    background: rgba(0, 0, 0, .7);
+}
+
+.sub-title {
+    margin-top: .665%;
+    font-family: serif;
+    font-style: italic;
+    line-height: 1.2;
+}
+
+.top-5 {
+    margin-top: .665%;
+}
+
+.top-10 {
+    margin-top: 1.33%;
+}
+
+.top-15 {
+    margin-top: 2%;
+}
+
+.top-20 {
+    margin-top: 2.66%;
+}
+
+.top-25 {
+    margin-top: 4%;
+}
+
+.row {
+    margin-left: -2%;
+    margin-right: -2%;
+}
+
+.inner-row {
+    margin: 0 2%;
+}
+
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
+    position: relative;
+    min-height: 1px;
+    padding: 0 2%;
+    float: left;
+}
+
+.col-12 {
+    width: 100%;
+}
+
+.col-11 {
+    width: 91.66666667%;
+}
+
+.col-10 {
+    width: 83.33333333%;
+}
+
+.col-9 {
+    width: 75%;
+}
+
+.col-8 {
+    width: 66.66666667%;
+}
+
+.col-7 {
+    width: 58.33333333%;
+}
+
+.col-6 {
+    width: 50%;
+}
+
+.col-5 {
+    width: 41.66666667%;
+}
+
+.col-4 {
+    width: 33.33333333%;
+}
+
+.col-3 {
+    width: 25%;
+}
+
+.col-2 {
+    width: 16.66666667%;
+}
+
+.col-1 {
+    width: 8.33333333%;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.text-nowrap {
+    white-space: nowrap;
+}
+
+.text-lowercase {
+    text-transform: lowercase;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.section-name {
+    height: 37px;
+    border-bottom: 2px solid #788d0f;
+    position: relative;
+}
+
+.section-name:before {
+    content:"";
+    width:30px;
+    height: 33px;
+    top: 2px;
+    left:-1px;
+    background: url(https://dvatabuka.eu/wp-content/themes/greentheme/images/sprites.png) no-repeat -10px -80px;
+    position: absolute;
+}
+
+.section-name div {
+    width: 100%;
+    padding-left: 40px;
+    font-size: 1.285714285714286em;
+    line-height: 1;
+    text-transform: uppercase;
+    overflow: hidden;
+    position: absolute;
+    bottom: 2px;
+    right: 0;
+}
+
+.widget>.section-name {
+    margin-bottom: 1.33%;
+}
+
+.section-name.text-right div {
+    padding-left: 25%;
+}
+
+.autor-date {
+    color: #c1d825;
+    font-style: italic;
+}
+
+.autor {
+    font-size: 0.8571428571428571em;
+    text-decoration: none;
+}
+
+.date {
+    font-size: 0.7857142857142857em;
+    float: right;
+}
+
+.read-more {
+    font-size: 12px;
+    color: #f67f00;
+    float: right;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+
+.list ol li,
+.post-content ol li {
+    padding-left: 0;
+}
+
+.list ul li,
+.post-content ul li {
+    padding-left: 10px;
+    position:relative;
+}
+
+.list ul li:before,
+.post-content ul li:before {
+    content:"";
+    display: inline-block;
+    position:absolute;
+    margin-top:-4px;
+    width:5px;
+    height:8px;
+    top:11px;
+    left:0;
+    background: url(https://dvatabuka.eu/wp-content/themes/greentheme/images/sprites.png) no-repeat -4px -17px;
+}
+
+.list ul li:first-child,
+.list ol li:first-child,
+.post-content ul li:first-child,
+.post-content ol li:first-child {
+    margin-top: 0;
+}
+
+.list ul li,
+.list ol li,
+.post-content ul li,
+.post-content ol li {
+    margin-top: 5px;
+    color: #dadada;
+}
+
+.list ul li a,
+.list ol li a,
+.post-content ul li a,
+.post-content ol li a {
+    color: #dadada;
+    display: inline-block;
+}
+
+.list ul li a:hover,
+.list ol li a:hover,
+.post-content ul li a:hover,
+.post-content ol li a:hover {
+    color: #f67f00;
+}
+
+.post-content a:hover {
+    text-decoration: underline;
+}
+
+.list ul li:hover:before,
+.post-content ul li:hover:before {
+    background: url(https://dvatabuka.eu/wp-content/themes/greentheme/images/sprites.png) no-repeat -17px -17px;
+}
+
+#header>div {
+    position: relative;
+}
+
+#logo a {
+    display: inline-block;
+    width:200px;
+    height:131px;
+}
+
+#site-name {
+    position: absolute;
+    left: -999999px;
+    opacity: 0;
+}
+
+#site-description {
+    font-size: 1em;
+}
+
+
+#header #search-holder {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+#header #search-holder #search {
+    float: right;
+}
+
+.search {
+    width: 160px;
+    height: 22px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background: url(https://dvatabuka.eu/wp-content/themes/greentheme/images/sprites.png) repeat-x 0 -242px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+div.search form {
+    margin: 2px 0 0 2px;
+}
+
+div.search form .SearchBox {
+    width: 125px;
+    height: 15px;
+    margin-left: 3px;
+    background: none;
+    color: #dadada;
+    font-size: 0.8571428571428571em;
+    float: left;
+}
+
+div.search form .SearchButton {
+    width: 25px;
+    height: 20px;
+    background: url(https://dvatabuka.eu/wp-content/themes/greentheme/images/sprites.png) no-repeat -11px -30px;
+    float: right;
+}
+
+#nav {
+    height: 45px;
+    background: rgba(193, 216, 37, 0.7);
+}
+
+#nav a {
+    padding: 0 10px;
+    color: #2e3308;
+    line-height: 45px;
+    display: block;
+}
+
+#home {
+    width: 44px;
+    height: 58px;
+    margin-right: 10px;
+    background: url(https://dvatabuka.eu/wp-content/themes/greentheme/images/sprites.png) no-repeat -1px -181px !important;
+    float: left;
+}
+
+#home:hover {
+    background: url(https://dvatabuka.eu/wp-content/themes/greentheme/images/sprites.png) no-repeat -1px -123px !important;
+}
+
+#home a {
+    display: block;
+    text-indent: -9999px;
+}
+
+#nav>ul {
+    float: left;
+}
+
+#nav>ul>li {
+    margin-right: 2px;
+}
+
+#nav>ul li {
+    font-size: 1.571428571428571em;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    float: left;
+}
+
+#nav>ul li:hover>ul {
+    display: block;
+}
+
+#nav>ul li>ul {
+    width: 180px;
+    display: none;
+    position: absolute;
+    background: rgba(143, 160, 27, 0.94);
+    z-index: 1;
+}
+
+#nav>ul li>ul>li {
+    font-size: 16px;
+    float: none;
+    position: relative;
+}
+
+#nav>ul li>ul>li a:hover,
+#nav>ul li>ul>li.current-menu-item>a {
+    background-color: rgba(0, 0, 0, 0.2);
+    background-image: none;
+}
+
+#nav>ul li>ul>li>a {
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px solid #2e3308;
+    overflow: hidden;
+}
+
+#nav>ul li>ul>li>ul {
+    left: 180px;
+    top: 0;
+}
+
+#nav>ul li>ul>li>ul>li>a {
+    border-left: 1px solid #2e3308;
+}
+
+#nav>ul>li.current-menu-item,
+#nav>ul>li.current-menu-parent,
+#nav>ul>li:hover {
+       position:relative;
+}
+
+#nav>ul>li.current-menu-item:before,
+#nav>ul>li.current-menu-parent:before,
+#nav>ul>li:hover:before {
+    content: "";
+    display:inline-block;
+    width:20px;
+    height:15px;
+    margin-left: -10px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    background: url(https://dvatabuka.eu/wp-content/themes/greentheme/images/sprites.png) no-repeat -3px 0px;
+}
+
+#nav-show-btn {
+    height: 45px;
+    background: none;
+    line-height: 45px;
+    text-align: right;
+    vertical-align: middle;
+    display: none;
+}
+
+#nav-show-btn .search {
+    margin-right: 2%;
+}
+
+.btn {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #2e3308;
+    font-size: 2.2em;
+    line-height: 45px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.glyphicon-menu-hamburger:before {
+    content: "\e236";
+}
+
+#nav.toggle {
+    height: auto;
+    padding-bottom: 25px;
+}
+
+#nav.toggle ul {
+    width: 100%;
+    float: none;
+    clear: left;
+    display: block;
+}
+
+#nav.toggle>ul li {
+    float: none;
+    overflow: hidden;
+}
+
+#nav.toggle ul li a {
+    padding-left: 22px;
+    background: rgba(143, 160, 27, .95);
+    border-left: 1px solid #2e3308;
+    border-bottom: 1px solid #2e3308;
+}
+
+#nav.toggle ul li ul {
+    width: 100%;
+    background: none;
+    margin-left: 50px;
+    display: block;
+    position: relative;
+    left: 0;
+}
+
+#nav.toggle>ul li.current-menu-item:before,
+#nav.toggle>ul li.current-menu-parent:before,
+#nav.toggle>ul li:hover:before {
+    background-image: none;
+}
+
+#nav.toggle li.current-menu-item>a,
+#nav.toggle li.current-menu-parent>a,
+#nav.toggle ul>li:hover>a {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#nav.toggle li.current-menu-item>a:before,
+#nav.toggle li.current-menu-parent>a:before,
+#nav.toggle ul>li>a:hover:before {
+    content:"";
+    display:inline-block;
+    position:relative;
+    width:5px;
+    height:8px;
+    margin: 0px 6px 0 -11px;
+    top:-3px;
+    background: url(https://dvatabuka.eu/wp-content/themes/greentheme/images/sprites.png) no-repeat -29px -17px;
+}
+
+.main-img {
+    width: 49%;
+    position: relative;
+}
+
+.main-img.left {
+    margin-right: 1.8%;
+}
+
+.main-img.right {
+    margin-left: 1.8%;
+}
+
+.main-heading {
+    width: 49%;
+    margin-bottom: .5%;
+}
+
+.main-heading.full-width {
+    width: 100%;
+    float: none;
+    clear: both;
+}
+
+.quote {
+    padding-top: 1px;
+    background: rgba(193, 216, 37, 0.7);
+    border-radius: 10px;
+    color: #2e3308;
+    position: relative;
+}
+
+.quote-bar {
+    margin: 10px 15px 0;
+    background-color: rgba(0, 0, 0, .2);
+    color: rgba(193, 216, 37, .8);
+    font-size: 1.142857142857143em;
+    line-height: 1.4em;
+    text-transform: uppercase;
+}
+
+.quote a {
+    color: #2e3308;
+}
+
+.quote header {
+    padding: 0 15px;
+    border: 0;
+}
+
+.quote article>div {
+    padding: 0 15px 10px;
+}
+
+.quote header a h2 {
+    font-size: 1.285714285714286em;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.box {
+    border: 1px solid #c1d825;
+}
+
+.box article {
+    padding: 20px 20px 10px;
+}
+
+.box article header {
+    margin-bottom: 2%;
+}
+
+.green-bar {
+    height: 25px;
+    padding: 0 15px;
+    background: url(https://dvatabuka.eu/wp-content/themes/greentheme/images/sprites.png) repeat-x 0 -265px;
+    border-bottom: 1px solid #c1d825;
+    color: #2e3308;
+    line-height: 25px;
+    font-size: 1.142857142857143em;
+    text-transform: uppercase;
+}
+
+.box-img {
+    width: 30%;
+}
+
+.box-img.left {
+    margin-right: 2%;
+}
+
+.box-img.right {
+    margin-left: 2%;
+}
+
+.book-cover {
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+
+.cover-title {
+    width: 100%;
+    padding: 5px;
+    background: rgba(0, 0, 0, .7);
+    text-align: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+#book-cover .cover-title {
+    color: #c1d825;
+    display: none;
+}
+
+#rubrics>div:nth-child(4n+4) {
+    clear: left;
+}
+
+.tagcloud {
+    line-height: 1.2;
+    overflow: hidden;
+}
+
+.tagcloud a {
+    opacity: .6;
+}
+
+.tagcloud a:hover {
+    opacity: 1;
+}
+
+.post-title {
+    color: #f67f00;
+}
+
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6{
+    margin: 1.33% 0;
+    color: #f67f00;
+}
+
+.post-content p {
+    margin-top: 1.33%;
+}
+
+.post-content p img {
+    width: auto;
+}
+
+.post-content p img.aligncenter {
+    width: 100%;
+}
+
+.wp-block-image .aligncenter,
+.wp-block-image.aligncenter{
+    clear:both;
+}
+
+.wp-block-embed,
+.wp-block-image,
+.wp-block-image .alignleft,
+.wp-block-image .alignright,
+.wp-block-image .aligncenter{
+    margin: 1.33% 0;
+    display: block;
+}
+
+.wp-caption, .wp-block-image figure, figure.wp-block-image {
+    background-color: rgba(9, 21, 4, .7);
+}
+
+.wp-caption.alignleft,
+img.alignleft, .wp-block-image .alignleft {
+    margin-right: 1.5%;
+    float: left;
+}
+
+.wp-caption.alignright,
+img.alignright, .wp-block-image .alignright {
+    margin-left: 1.5%;
+    float: right;
+}
+
+.wp-caption.aligncenter {
+    margin: 0 auto;
+}
+
+.wp-caption-text, .wp-block-image > figcaption, .wp-block-image > figure > figcaption {
+    margin: .3% 0;
+    display: block !important;
+    font-size: 0.8571428571428571em;
+    font-style: italic;
+    text-align: center;
+    color: #dadada;
+}
+
+.wp-block-embed__wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+}
+
+.wp-block-embed__wrapper iframe,  
+.wp-block-embed__wrapper object,
+.wp-block-embed__wrapper embed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.tags {
+    width: 65%;
+    display: inline-block;
+}
+
+
+#footer div {
+    padding: 1% 0;
+}
+
+#footer a {
+    color: #dadada;
+}
+
+#footer a:hover {
+    color: #f67f00;
+    text-decoration: underline;
+}
+
+#fb-friends {
+    height: 242px;
+    text-align: center
+}
+
+.fb-like-box,
+.fb-like-box span,
+.fb-like-box span iframe {
+    width: 100% !important;
+}
+
+.fb-like-share {
+    display: inline-block;
+    float: right;
+}
+
+/*
+*
+* WP QUIZ styles
+*
+*/
+.wq_quizCtr {
+	margin-top: 2.66%;
+}
+.wq_quizProgressBar {
+    background: none;
+}
+.wq_quizProgressBar > span {
+    background-color: rgba(193, 216, 37, 0.4);
+}
+.wq_quizCtr.flip_quiz .wq_questionTextCtr {
+    color: #dadada;    
+}
+.wq-skin-traditional .wq_questionTextWrapper,
+.wq-skin-traditional .wq_questionTextCtr,
+.wq-skin-traditional .wq_singleAnswerCtr,
+.wq-quiz.wq-skin-flat .wq_questionTextWrapper,
+.wq-quiz.wq-skin-flat .wq_questionTextCtr,
+.wq-quiz.wq-skin-flat .wq_singleAnswerCtr {
+    background-color: rgba(9, 21, 4, 0.8);
+    color: #dadada;
+}
+.wq-skin-traditional .wq_singleAnswerCtr:hover,
+.wq-skin-traditional .wq_singleAnswerCtr.chosen,
+.wq-skin-traditional .wq_singleAnswerCtr.wq_answerSelected,
+.wq-quiz.wq-skin-flat .wq_singleAnswerCtr:hover,
+.wq-quiz.wq-skin-flat .wq_singleAnswerCtr.chosen,
+.wq-quiz.wq-skin-flat .wq_singleAnswerCtr.wq_answerSelected  {
+    background: #091504;
+    color: #f67f00;
+    border-color: #f67f00;
+}
+.wq_triviaQuestionExplanation{
+    border-color: #dadada;
+}
+.wq-skin-traditional .wq_singleAnswerCtr.wq_correctAnswer,
+.wq-quiz.wq-skin-flat .wq_singleAnswerCtr.wq_correctAnswer {
+    background: rgba(9, 21, 4, 0.8);
+    border-color: #c1d825;
+    color:#c1d825;
+}
+.wq_triviaQuestionExplanation .wq-explanation-head-correct{
+    color: #c1d825;
+}
+.wq_triviaQuestionExplanation .wq-explanation-head-incorrect{
+    color: #ff0000;
+}
+.wq_retakeQuizBtn, 
+.wq-force-login button, 
+.wq_singleQuestionWrapper .wq_continue button, 
+.wq_quizEmailCtr form button {
+   background-color: #091504;
+   border: 1px solid #788d0f;
+}
+.wq-results,
+.wq-quiz.wq-skin-flat .wq-results {
+    background: rgba(9, 21, 4, 0.8);
+    border-color: #788d0f;    
+}
+.wq-results p img {
+    width: 100%;
+}
+.wq-question-hint-content {
+    background-color: rgba(193, 216, 37, 0.7);
+    border-color: #788d0f;
+    color: #091504;
+}
+
+/*
+*
+* Ads styles
+*
+*/
+#m-ads .custom-html-widget {
+    display:none;
+}
+#header-ads {
+    position: relative;
+}
+#home-ads,
+#footer-ads {
+    margin-top:2.66%;
+    position:relative;
+}
+#home-ads .custom-html-widget,
+#footer-ads .custom-html-widget {
+   padding:0 2%;
+}
+#m-ads .custom-html-widget,
+.responsive-ad,
+#header-ads .custom-html-widget,
+#home-ads .custom-html-widget,
+#sidebar-ads .custom-html-widget,
+#footer-ads .custom-html-widget {
+    margin: 0 auto;    
+}
+.header-ad {
+    height:90px;
+    width:100%;
+    display:block;
+}
+.home-ad, .footer-ad {
+    max-width:970px;
+    width:100%;
+    height:90px;
+} 
+@media screen and (max-width:1440px) {
+    #home-ads .custom-html-widget {
+        width:95%;
+    }
+    #sidebar-ads .custom-html-widget {
+        width:85%;
+    }
+    #footer-ads .custom-html-widget {
+        width: 75%;
+    }   
+}
+@media screen and (max-width:1366px) {
+    #home-ads .custom-html-widget {
+        width:100%;
+    }
+    #sidebar-ads .custom-html-widget {
+        width:90%;
+    }
+    #footer-ads .custom-html-widget {
+        width: 80%;
+    }
+}
+@media screen and (max-width:1200px) {
+    #wrapper {
+        width: 91%;
+    }
+}
+@media screen and (max-width:1080px) {
+    #sidebar-ads .custom-html-widget {
+        width:100%;
+    }
+}
+@media screen and (max-width:920px) {
+    #search-holder {
+        display: none;
+    }
+    #nav-show-btn {
+        display: block;
+    }
+    #nav ul {
+        display: none;
+    }
+    #footer-ads .custom-html-widget {
+       width:100%;
+    }      
+}
+
+@media screen and (max-width:800px) {
+    #content {
+        width: 100%;
+    }
+    #sidebar {
+        width: 100%;
+        padding: 0;
+    }
+    #sidebar>div.widget {
+        width: 33.3333%;
+        float: left;
+        padding: 0 2%;
+    }
+    #header {
+        margin-top:0;
+    }    
+    #header-ads,
+    .header-ad {
+        display:none;
+    }
+    .m-ads {
+        padding-top:95px;
+    }
+    #m-ads {
+        display:block;
+        width:100%;
+        height:100%;
+        max-height:90px;
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:999999;
+    }
+    #m-ads .custom-html-widget {
+        position:relative;
+        float: none;
+    }
+    #m-ads .custom-html-widget,
+    #m-ads .custom-html-widget .responsive-ad {
+        display:block;
+        min-height:60px;
+        height:90px;
+        width:100%;
+    }  
+}
+
+@media screen and (max-width:620px) {
+    #accent-boxes div.col-4,
+    #accent-boxes div.col-8,
+    .post-content p img,
+    .wp-block-image .alignleft,
+    .wp-block-image .alignright,
+    .wp-block-image .aligncenter{
+        width: 50%;
+    }
+    #accent-boxes .box img {
+        display: none;
+    }
+    #sidebar>div.widget {
+        width: 50%;
+        padding: 0 2%;
+    }
+    #sidebar>div+div.widget:nth-child(2n+1),
+    #rubrics>div+div:nth-child(2n+1) {
+        clear: left;
+    }
+    #rubrics>div:nth-child(4n+4) {
+        clear: none;
+    }
+    .news-boxes>div.col-4,
+    .news-boxes>div.col-3 {
+        width: 50%;
+    }
+    .news-boxes>div.col-4+div.col-4+div.col-4 {
+        margin-top: 3.3%;
+    }    
+}
+
+@media screen and (max-width:500px) {
+    #logo {
+        width: 100%;
+        text-align: center;
+    }
+    .main-heading,
+    .main-img,
+    .main-img.left,
+    .main-img.right {
+        width: 100%;
+        margin: 1.33% 0;
+        float: none;
+    }
+    #accent-boxes div.col-4,
+    #accent-boxes div.col-8,
+	.post-content p img	{
+        width: 100%;
+    }
+    #accent-boxes .box img {
+    display: block;
+    }
+    #book-cover div.col-3 {
+        width: 50%;
+    }
+    #book-cover>div.col-3+div.col-3+div.col-3 {
+        margin-top: 3.3%;
+    }
+    #sidebar>div.widget {
+        width: 100%;
+    }    
+    .wp-caption,
+    .wp-block-image,
+    .wp-block-image .alignleft,
+    .wp-block-image .alignright,
+    .wp-block-image .aligncenter {
+        width: 100% !important;
+        margin: 0;
+        float: none;
+    }
+    .m-ads {
+        padding-top:65px;
+    }
+    #m-ads {
+        max-height: 60px;
+    }
+    #m-ads .custom-html-widget,
+    #m-ads .custom-html-widget .responsive-ad {
+        height:60px;
+        width:100%; 
+    }     
+    .home-ad, .footer-ad {
+        height:100%;
+        min-height: 250px;
+        max-height: 350px;
+    }    
+}
+@media screen and (max-width:380px) {
+    .news-boxes>div.col-4,
+    .news-boxes>div.col-3 {
+        width: 100%;
+    }
+    .news-boxes>div.col-4+div.col-4 {
+        margin-top: 3.3%;
+    }
+    #accent-boxes .box img {
+        display: none;
+    }    
+    #footer-ads .custom-html-widget {
+       padding:0;
+    }     
+}
+
+@media screen and (max-width:360px) {
+    #nav-show-btn .search {
+        margin-right: 0;
+    } 
+}
+
+@media screen and (max-width:320px) {  
+    .m-ads {
+        padding-top:105px;
+    }    
+    #m-ads {
+        max-height: 100px;
+    }
+    #m-ads .custom-html-widget,
+    #m-ads .custom-html-widget .responsive-ad {
+        height:100px;
+        width:100%; 
+    } 
+}
