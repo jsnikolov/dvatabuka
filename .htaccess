@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^dvatabuka\.site$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.dvatabuka\.site$
+RewriteRule ^(.*)$ https://dvatabuka.eu/$1 [R=301,L]
