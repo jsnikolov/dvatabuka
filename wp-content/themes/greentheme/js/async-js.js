@@ -15,7 +15,7 @@ function appendScript(items){
 var scripts = [
         createScript("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"),
         createScript("https://www.googletagmanager.com/gtag/js?id=UA-58102164-1"),
-        createScript("https://dvatabuka.site/wp-content/themes/greentheme/js/services.js")
+        createScript(window.location.origin + "/wp-content/themes/greentheme/js/services.js")
 ];
 
 function appendFb(items){
@@ -25,7 +25,7 @@ function appendFb(items){
 };
 
 var fb = [
-        createScript("https://dvatabuka.site/wp-content/themes/greentheme/js/fb-min.js")
+        createScript(window.location.origin + "/wp-content/themes/greentheme/js/fb-min.js")
 ];
 
 function dbLoad(){
