@@ -60,7 +60,7 @@ function createCookieYesScript(src) {
     element.setAttribute("data-cbid", "b0a62c40-90c8-40aa-b666-00f253009007");
     return element;
 }
-document.head.appendChild(createCookiebotScript("https://cdn-cookieyes.com/client_data/48089ea18522c94f7a3cc421/script.js"));
+document.head.appendChild(createCookieYesScript("https://cdn-cookieyes.com/client_data/48089ea18522c94f7a3cc421/script.js"));
 
 
 
