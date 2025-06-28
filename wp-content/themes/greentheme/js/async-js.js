@@ -1,7 +1,19 @@
+function createCookiebotScript(src){
+        var element = document.createElement("script");
+        element.id = "Cookiebot";
+        element.type = "text/javascript";
+        element.async = true;
+        element.src = src;
+        element.setAttribute("data-cbid", "b0a62c40-90c8-40aa-b666-00f253009007");
+        return element;
+}
+document.head.appendChild(createCookiebotScript("https://consent.cookiebot.com/uc.js"));
+
+
 function createScript(src){
         var element = document.createElement("script");
         element.type = "text/javascript";
-        element.async = "async";
+        element.async = true;
         element.src = src;
         return element;
 }
