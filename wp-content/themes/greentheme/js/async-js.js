@@ -1,13 +1,46 @@
-function createCookiebotScript(src){
-        var element = document.createElement("script");
-        element.id = "Cookiebot";
-        element.type = "text/javascript";
-        element.async = true;
-        element.src = src;
-        element.setAttribute("data-cbid", "b0a62c40-90c8-40aa-b666-00f253009007");
-        return element;
+//  Поставете този код възможно най-високо в маркера <head> на страницата: 
+//  Google Tag Manager 
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MSK9ZKQV');
+
+
+//  Поставете този код непосредствено след отварящия маркер <body>:
+//  Google Tag Manager (noscript) -->
+function insertGTMiframeIfConsent() {
+    // Проверка дали CookieYes е зареден
+    if (window.CookieYes && typeof CookieYes.getConsentForCategory === 'function') {
+        // Проверява дали има съгласие за категория 'analytics'
+        if (CookieYes.getConsentForCategory('analytics')) {
+            addIframe();
+        }
+    }
+
+    function addIframe() {
+        var iframe = document.createElement('iframe');
+        iframe.src = "https://www.googletagmanager.com/ns.html?id=GTM-MSK9ZKQV";
+        iframe.height = "0";
+        iframe.width = "0";
+        iframe.style.display = "none";
+        iframe.style.visibility = "hidden";
+
+        if (document.body.firstChild) {
+            document.body.insertBefore(iframe, document.body.firstChild);
+        } else {
+            document.body.appendChild(iframe);
+        }
+    }
 }
-document.head.appendChild(createCookiebotScript("https://consent.cookiebot.com/uc.js"));
+
+window.addEventListener('DOMContentLoaded', function () {
+    // Изчакваме CMP да се зареди (1 секунда)
+    setTimeout(insertGTMiframeIfConsent, 1000);
+});
+//  End Google Tag Manager 
+
+
 
 
 function createScript(src){
