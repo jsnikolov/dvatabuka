@@ -52,6 +52,16 @@ window.addEventListener('DOMContentLoaded', function () {
 //  End Google Tag Manager 
 
 
+function createCookieYesScript(src) {
+    var element = document.createElement("script");
+    element.id = "cookieyes";
+    element.type = "text/javascript";
+    element.src = src;
+    element.setAttribute("data-cbid", "b0a62c40-90c8-40aa-b666-00f253009007");
+    return element;
+}
+document.head.appendChild(createCookiebotScript("https://cdn-cookieyes.com/client_data/48089ea18522c94f7a3cc421/script.js"));
+
 
 
 function createScript(src){
