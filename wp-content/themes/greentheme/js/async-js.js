@@ -1,6 +1,11 @@
 (function() {
-    // 1. Зареждане на CookieYes скрипта
+    // 1. Зареждане на CookieYes скрипта с onload callback
     function loadCookieYes(callback) {
+        if (document.getElementById("cookieyes")) {
+            // Ако вече е зареден, директно callback
+            callback();
+            return;
+        }
         const script = document.createElement("script");
         script.id = "cookieyes";
         script.type = "text/javascript";
@@ -24,7 +29,7 @@
         const categories = {};
         cookie.split(',').forEach(part => {
             const [key, value] = part.split(':');
-            if (key && value && !['consentid', 'consent', 'action'].includes(key)) {
+            if (key && value && !['consentid', 'consent', 'action'].includes(key.trim())) {
                 categories[key.trim()] = value.trim() === 'yes';
             }
         });
@@ -43,19 +48,23 @@
 
     const scriptsByCategory = {
         analytics: [
-            createScript("https://www.googletagmanager.com/gtag/js?id=UA-58102164-1"),
-            createScript("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
+            "https://www.googletagmanager.com/gtag/js?id=UA-58102164-1",
+            "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
         ],
-        social: [
-            createScript(window.location.origin + "/wp-content/themes/greentheme/js/fb-min.js")
+        advertisement: [
+            window.location.origin + "/wp-content/themes/greentheme/js/fb-min.js"
         ],
         functional: [
-            createScript(window.location.origin + "/wp-content/themes/greentheme/js/services.js")
+            window.location.origin + "/wp-content/themes/greentheme/js/services.js"
         ]
     };
 
+    // За да не се дублират скриптове, пазим добавените
+    const addedScripts = new Set();
+
     // 5. GTM
     function insertGTMscript() {
+        if (addedScripts.has('gtm')) return;
         const script = document.createElement('script');
         script.async = true;
         script.text = "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':" +
@@ -64,10 +73,13 @@
             "'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);" +
             "})(window,document,'script','dataLayer','GTM-MSK9ZKQV');";
         document.head.appendChild(script);
+        addedScripts.add('gtm');
     }
 
     function insertGTMiframe() {
+        if (document.getElementById('gtm-iframe')) return;
         const iframe = document.createElement('iframe');
+        iframe.id = 'gtm-iframe';
         iframe.src = "https://www.googletagmanager.com/ns.html?id=GTM-MSK9ZKQV";
         iframe.height = "0";
         iframe.width = "0";
@@ -76,7 +88,7 @@
         document.body.insertBefore(iframe, document.body.firstChild);
     }
 
-    // 6. Зареждане на скриптове според съгласие
+    // 6. Зареждане на скриптове според съгласие, без дублиране
     function loadScriptsBasedOnConsent() {
         const categories = getConsentCategories();
         if (!categories) return;
@@ -86,26 +98,28 @@
             insertGTMiframe();
         }
 
-        Object.entries(scriptsByCategory).forEach(([category, scripts]) => {
+        Object.entries(scriptsByCategory).forEach(([category, urls]) => {
             if (categories[category]) {
-                scripts.forEach(script => {
-                    const target = category === "social" ? document.body : document.head;
-                    target.appendChild(script);
+                urls.forEach(src => {
+                    if (!addedScripts.has(src)) {
+                        const script = createScript(src);
+                        const target = category === "advertisement" ? document.body : document.head;
+                        target.appendChild(script);
+                        addedScripts.add(src);
+                    }
                 });
             }
         });
     }
 
-    // 7. Изчакване DOM и зареждане на CookieYes
+    // 7. Инициализация: зареждаме CookieYes и слушаме за промяна в съгласията
     window.addEventListener("load", function () {
         loadCookieYes(() => {
-            // Първоначално изчакваме за наличието на бисквитка
+            // Първоначално зареждане на скриптове според съгласие
             setTimeout(loadScriptsBasedOnConsent, 1000);
 
-            // Слушаме промяна на съгласието
-            window.addEventListener("cookieyes_consent_update", function () {
-                loadScriptsBasedOnConsent();
-            });
+            // Слушаме за актуализация на съгласията без презареждане
+            window.addEventListener("cookieyes_consent_update", loadScriptsBasedOnConsent);
         });
     });
 })();
