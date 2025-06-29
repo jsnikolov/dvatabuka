@@ -89,37 +89,87 @@
     }
 
     // 6. Зареждане на скриптове според съгласие, без дублиране
-    function loadScriptsBasedOnConsent() {
-        const categories = getConsentCategories();
-        if (!categories) return;
+//    function loadScriptsBasedOnConsent() {
+//        const categories = getConsentCategories();
+//        if (!categories) return;
+//
+//        if (categories.analytics) {
+//            insertGTMscript();
+//            insertGTMiframe();
+//        }
+//
+//        Object.entries(scriptsByCategory).forEach(([category, urls]) => {
+//            if (categories[category]) {
+//                urls.forEach(src => {
+//                    if (!addedScripts.has(src)) {
+//                        const script = createScript(src);
+//                        const target = category === "advertisement" ? document.body : document.head;
+//                        target.appendChild(script);
+//                        addedScripts.add(src);
+//                    }
+//                });
+//            }
+//        });
+//    }
+//
+//    // 7. Инициализация: зареждаме CookieYes и слушаме за промяна в съгласията
+//    window.addEventListener("load", function () {
+//        loadCookieYes(() => {
+//            // Първоначално зареждане на скриптове според съгласие
+//            setTimeout(loadScriptsBasedOnConsent, 1000);
+//
+//            // Слушаме за актуализация на съгласията без презареждане
+//            window.addEventListener("cookieyes_consent_update", loadScriptsBasedOnConsent);
+//        });
+//    });
 
-        if (categories.analytics) {
-            insertGTMscript();
-            insertGTMiframe();
-        }
 
-        Object.entries(scriptsByCategory).forEach(([category, urls]) => {
-            if (categories[category]) {
-                urls.forEach(src => {
-                    if (!addedScripts.has(src)) {
-                        const script = createScript(src);
-                        const target = category === "advertisement" ? document.body : document.head;
-                        target.appendChild(script);
-                        addedScripts.add(src);
-                    }
-                });
-            }
-        });
+// Глобална променлива, за да предотвратиш безкрайно презареждане
+let consentReloaded = false;
+
+function loadScriptsBasedOnConsent() {
+    const categories = getConsentCategories();
+    if (!categories) return;
+
+    if (categories.analytics) {
+        insertGTMscript();
+        insertGTMiframe();
     }
 
-    // 7. Инициализация: зареждаме CookieYes и слушаме за промяна в съгласията
-    window.addEventListener("load", function () {
-        loadCookieYes(() => {
-            // Първоначално зареждане на скриптове според съгласие
-            setTimeout(loadScriptsBasedOnConsent, 1000);
+    Object.entries(scriptsByCategory).forEach(([category, urls]) => {
+        if (categories[category]) {
+            urls.forEach(src => {
+                if (!addedScripts.has(src)) {
+                    const script = createScript(src);
+                    const target = category === "advertisement" ? document.body : document.head;
+                    target.appendChild(script);
+                    addedScripts.add(src);
+                }
+            });
+        }
+    });
+}
 
-            // Слушаме за актуализация на съгласията без презареждане
-            window.addEventListener("cookieyes_consent_update", loadScriptsBasedOnConsent);
+window.addEventListener("load", function () {
+    loadCookieYes(() => {
+        setTimeout(loadScriptsBasedOnConsent, 1000);
+
+        window.addEventListener("cookieyes_consent_update", () => {
+            loadScriptsBasedOnConsent();
+
+            // Ако още не сме презаредили страницата, и има съгласие - презареждаме
+            const categories = getConsentCategories();
+            if (!consentReloaded && categories && Object.values(categories).some(v => v === true)) {
+                consentReloaded = true;
+                location.reload();
+            }
         });
     });
+});
+
+
+
+
+
+
 })();
