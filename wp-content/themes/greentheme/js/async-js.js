@@ -8,15 +8,31 @@ function createScript(src) {
 }
 
 // 2. CookieYes
-function loadCookieYes() {
-    const script = document.createElement("script");
-    script.id = "cookieyes";
-    script.type = "text/javascript";
-    script.async = true;
-    script.src = "https://cdn-cookieyes.com/client_data/48089ea18522c94f7a3cc421/script.js";
-    document.head.appendChild(script);
+function createCookieYesScript(src) {
+    var element = document.createElement("script");
+    element.id = "cookieyes";
+    element.type = "text/javascript";
+    element.src = src;
+    return element;
 }
-loadCookieYes();
+document.head.appendChild(createCookieYesScript("https://cdn-cookieyes.com/client_data/48089ea18522c94f7a3cc421/script.js"));
+
+
+
+//function loadCookieYes() {
+//    var element = document.createElement("script");
+//    element.id = "cookieyes";
+//    element.type = "text/javascript";
+//    element.src = "https://cdn-cookieyes.com/client_data/48089ea18522c94f7a3cc421/script.js";
+//    document.head.appendChild(script);
+//}
+//loadCookieYes();
+
+
+
+
+
+
 
 // 3. Категоризирани скриптове
 const scriptsByCategory = {
