@@ -1,55 +1,53 @@
-// Помощна функция за прочитане на бисквитка по име
-function getCookie(name) {
-    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? decodeURIComponent(match[2]) : null;
+function getCookieYesConsentCategories() {
+    const cookie = document.cookie.split('; ')
+        .find(row => row.startsWith('cookieyes-consent='));
+    if (!cookie) return {};
+
+    const value = decodeURIComponent(cookie.split('=')[1]);
+    const parts = value.split(',');
+    const consent = {};
+    parts.forEach(part => {
+        const [key, val] = part.split(':');
+        consent[key] = val === 'yes';
+    });
+    return consent;
 }
 
-// Взимаме и парсваме съгласието от cookieyes-consent
-function getConsentFromCookie() {
-    const cookie = getCookie('cookieyes-consent');
-    if (!cookie) return null;
-
-    try {
-        return JSON.parse(cookie);
-    } catch (e) {
-        return null;
-    }
-}
-
-// Функция за създаване на скрипт елемент
-function createScript(src, async = true) {
+// Създава script таг
+function createScript(src) {
     const s = document.createElement('script');
     s.type = "text/javascript";
-    s.async = async;
+    s.async = true;
     s.src = src;
     return s;
 }
 
-// Скриптове по категории
+// Категории
 const scriptsByCategory = {
     analytics: [
-        () => createScript("https://www.googletagmanager.com/gtag/js?id=UA-58102164-1"),
-        () => createScript("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
+        createScript("https://www.googletagmanager.com/gtag/js?id=UA-58102164-1"),
+        createScript("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
     ],
     social: [
-        () => createScript(window.location.origin + "/wp-content/themes/greentheme/js/fb-min.js")
+        createScript(window.location.origin + "/wp-content/themes/greentheme/js/fb-min.js")
     ],
     functional: [
-        () => createScript(window.location.origin + "/wp-content/themes/greentheme/js/services.js")
+        createScript(window.location.origin + "/wp-content/themes/greentheme/js/services.js")
     ]
 };
 
-// Зареждаме GTM скрипта и iframe, ако има consent.analytics
-function insertGTM() {
-    const gtmScript = document.createElement('script');
-    gtmScript.async = true;
-    gtmScript.text = "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':" +
+// Зареждане на GTM
+function insertGTMscript() {
+    const script = document.createElement('script');
+    script.text = "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':" +
         "new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0]," +
         "j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=" +
         "'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);" +
         "})(window,document,'script','dataLayer','GTM-MSK9ZKQV');";
-    document.head.appendChild(gtmScript);
+    document.head.appendChild(script);
+}
 
+function insertGTMiframe() {
     const iframe = document.createElement('iframe');
     iframe.src = "https://www.googletagmanager.com/ns.html?id=GTM-MSK9ZKQV";
     iframe.height = "0";
@@ -59,21 +57,18 @@ function insertGTM() {
     document.body.insertBefore(iframe, document.body.firstChild);
 }
 
-// Основна функция за зареждане според consent
+// Основна логика
 function loadScriptsBasedOnConsent() {
-    const consent = getConsentFromCookie();
-    if (!consent) return;
+    const consent = getCookieYesConsentCategories();
 
-    // GTM (ако има съгласие за analytics)
     if (consent.analytics) {
-        insertGTM();
+        insertGTMscript();
+        insertGTMiframe();
     }
 
-    // Зареждаме останалите скриптове по категории
-    Object.entries(scriptsByCategory).forEach(([category, scriptCreators]) => {
+    Object.entries(scriptsByCategory).forEach(([category, scripts]) => {
         if (consent[category]) {
-            scriptCreators.forEach(createFn => {
-                const script = createFn();
+            scripts.forEach(script => {
                 if (category === "social") {
                     document.body.appendChild(script);
                 } else {
@@ -84,8 +79,7 @@ function loadScriptsBasedOnConsent() {
     });
 }
 
-// Изчакваме пълно зареждане на страницата
+// Изпълни след зареждане на страницата
 window.addEventListener('load', function () {
-    // Даваме 0.8-1 секунда да се зададе бисквитката cookieyes-consent
-    setTimeout(loadScriptsBasedOnConsent, 900);
+    setTimeout(loadScriptsBasedOnConsent, 1000);
 });
