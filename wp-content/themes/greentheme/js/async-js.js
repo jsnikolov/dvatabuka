@@ -32,7 +32,7 @@ const scriptsByCategory = {
     ]
 };
 
-// 4. GTM – само ако има съгласие за analytics
+// 4. GTM
 function insertGTMscript() {
     var script = document.createElement('script');
     script.async = true;
@@ -53,7 +53,15 @@ function insertGTMiframe() {
     document.body.insertBefore(iframe, document.body.firstChild);
 }
 
-// 5. Основна функция, която зарежда скриптове според съгласие
+// 5. Инициализация на gtag след зареждане
+function initializeAnalytics() {
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-58102164-1');
+}
+
+// 6. Зареждане на скриптове според съгласие
 function loadScriptsBasedOnConsent() {
     const consent = window.CookieYes?.getUserConsent?.();
     if (!consent) return;
@@ -74,11 +82,17 @@ function loadScriptsBasedOnConsent() {
                     document.head.appendChild(script);
                 }
             });
+
+            // Специално за analytics – инициализация на gtag
+            if (category === "analytics") {
+                // Изчакваме да се зареди скриптът, после инициализираме
+                setTimeout(initializeAnalytics, 1000);
+            }
         }
     });
 }
 
-// 6. След DOM, изчакваме и CookieYes
+// 7. Изчакване след DOM + реакция на промяна на съгласие
 window.addEventListener('load', function () {
     setTimeout(loadScriptsBasedOnConsent, 800);
 });
