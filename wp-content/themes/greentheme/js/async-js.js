@@ -1,29 +1,23 @@
-// 1. CookieYes
-function createCookieYesScript(src) {
-    var element = document.createElement("script");
-    element.id = "cookieyes";
-    element.type = "text/javascript";
-    element.src = src;
-    element.async = true;
-    return element;
-}
-
-const cookieYesScript = createCookieYesScript("https://cdn-cookieyes.com/client_data/48089ea18522c94f7a3cc421/script.js");
-
-cookieYesScript.onload = function () {
-    loadScriptsBasedOnConsent(); // зарежда след като CookieYes е готов
-};
-
-document.head.appendChild(cookieYesScript);
-
-// 2. Utility
+<script>
+// 1. Създаване на скрипт
 function createScript(src) {
-    var s = document.createElement("script");
+    const s = document.createElement("script");
     s.type = "text/javascript";
     s.async = true;
     s.src = src;
     return s;
 }
+
+// 2. CookieYes
+function loadCookieYes() {
+    const script = document.createElement("script");
+    script.id = "cookieyes";
+    script.type = "text/javascript";
+    script.async = true;
+    script.src = "https://cdn-cookieyes.com/client_data/48089ea18522c94f7a3cc421/script.js";
+    document.head.appendChild(script);
+}
+loadCookieYes();
 
 // 3. Категоризирани скриптове
 const scriptsByCategory = {
@@ -41,7 +35,7 @@ const scriptsByCategory = {
 
 // 4. GTM
 function insertGTMscript() {
-    var script = document.createElement('script');
+    const script = document.createElement('script');
     script.async = true;
     script.text = "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':" +
         "new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0]," +
@@ -51,7 +45,7 @@ function insertGTMscript() {
     document.head.appendChild(script);
 }
 function insertGTMiframe() {
-    var iframe = document.createElement('iframe');
+    const iframe = document.createElement('iframe');
     iframe.src = "https://www.googletagmanager.com/ns.html?id=GTM-MSK9ZKQV";
     iframe.height = "0";
     iframe.width = "0";
@@ -60,26 +54,16 @@ function insertGTMiframe() {
     document.body.insertBefore(iframe, document.body.firstChild);
 }
 
-// 5. Инициализация на gtag след зареждане
-function initializeAnalytics() {
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'UA-58102164-1');
-}
-
-// 6. Зареждане на скриптове според съгласие
+// 5. Зареждане според съгласие
 function loadScriptsBasedOnConsent() {
     const consent = window.CookieYes?.getUserConsent?.();
     if (!consent) return;
 
-    // GTM
     if (consent.analytics) {
         insertGTMscript();
         insertGTMiframe();
     }
 
-    // По категории
     Object.entries(scriptsByCategory).forEach(([category, scripts]) => {
         if (consent[category]) {
             scripts.forEach(script => {
@@ -89,16 +73,12 @@ function loadScriptsBasedOnConsent() {
                     document.head.appendChild(script);
                 }
             });
-
-            // Специално за analytics – инициализация на gtag
-            if (category === "analytics") {
-                // Изчакваме да се зареди скриптът, после инициализираме
-                setTimeout(initializeAnalytics, 1000);
-            }
         }
     });
 }
 
-// 7. Слушане за последваща промяна на съгласие
-
-window.addEventListener('cookieyes_consent_update', loadScriptsBasedOnConsent);
+// 6. Изчакваме CookieYes да е готов
+window.addEventListener("cookieyes_ready", loadScriptsBasedOnConsent);
+// При промяна на съгласие
+window.addEventListener("cookieyes_consent_update", loadScriptsBasedOnConsent);
+</script>
