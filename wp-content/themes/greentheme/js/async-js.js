@@ -1,4 +1,3 @@
-<script>
 // 1. Създаване на скрипт
 function createScript(src) {
     const s = document.createElement("script");
@@ -81,4 +80,3 @@ function loadScriptsBasedOnConsent() {
 window.addEventListener("cookieyes_ready", loadScriptsBasedOnConsent);
 // При промяна на съгласие
 window.addEventListener("cookieyes_consent_update", loadScriptsBasedOnConsent);
-</script>
