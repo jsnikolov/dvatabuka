@@ -7,7 +7,14 @@ function createCookieYesScript(src) {
     element.async = true;
     return element;
 }
-document.head.appendChild(createCookieYesScript("https://cdn-cookieyes.com/client_data/48089ea18522c94f7a3cc421/script.js"));
+
+const cookieYesScript = createCookieYesScript("https://cdn-cookieyes.com/client_data/48089ea18522c94f7a3cc421/script.js");
+
+cookieYesScript.onload = function () {
+    loadScriptsBasedOnConsent(); // зарежда след като CookieYes е готов
+};
+
+document.head.appendChild(cookieYesScript);
 
 // 2. Utility
 function createScript(src) {
@@ -92,8 +99,6 @@ function loadScriptsBasedOnConsent() {
     });
 }
 
-// 7. Изчакване след DOM + реакция на промяна на съгласие
-window.addEventListener('load', function () {
-    setTimeout(loadScriptsBasedOnConsent, 800);
-});
+// 7. Слушане за последваща промяна на съгласие
+
 window.addEventListener('cookieyes_consent_update', loadScriptsBasedOnConsent);
