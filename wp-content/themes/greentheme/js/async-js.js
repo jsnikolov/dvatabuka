@@ -1,8 +1,6 @@
 (function() {
-    // 1. Зареждане на CookieYes скрипта
     function loadCookieYes() {
         if (document.getElementById("cookieyes")) return;
-
         const script = document.createElement("script");
         script.id = "cookieyes";
         script.type = "text/javascript";
@@ -11,17 +9,14 @@
         document.head.appendChild(script);
     }
 
-    // 2. Четене на бисквитка
     function getCookie(name) {
         const value = document.cookie.split('; ').find(row => row.startsWith(name + '='));
         return value ? decodeURIComponent(value.split('=')[1]) : null;
     }
 
-    // 3. Извличане на съгласие от cookieyes-consent
     function getConsentCategories() {
         const cookie = getCookie("cookieyes-consent");
         if (!cookie) return null;
-
         const categories = {};
         cookie.split(',').forEach(part => {
             const [key, value] = part.split(':');
@@ -29,11 +24,9 @@
                 categories[key.trim()] = value.trim() === 'yes';
             }
         });
-
         return categories;
     }
 
-    // 4. Utility: създаване на скриптове
     function createScript(src) {
         const s = document.createElement("script");
         s.type = "text/javascript";
@@ -57,7 +50,6 @@
 
     const addedScripts = new Set();
 
-    // 5. GTM
     function insertGTMscript() {
         if (addedScripts.has('gtm')) return;
         const script = document.createElement('script');
@@ -83,7 +75,6 @@
         document.body.insertBefore(iframe, document.body.firstChild);
     }
 
-    // 6. Зареждане на скриптове според съгласие
     function loadScriptsBasedOnConsent() {
         const categories = getConsentCategories();
         if (!categories) return;
@@ -107,28 +98,26 @@
         });
     }
 
-    // 7. Следене на промяна в стойността на cookieyes-consent
-    function startConsentMonitor() {
+    function observeConsentChange() {
         let lastConsent = getCookie("cookieyes-consent");
 
-        const interval = setInterval(() => {
+        // Наблюдаваме DOM, дали банерът е премахнат => съгласие е дадено
+        const observer = new MutationObserver(() => {
             const currentConsent = getCookie("cookieyes-consent");
-
             if (currentConsent && currentConsent !== lastConsent) {
                 lastConsent = currentConsent;
                 loadScriptsBasedOnConsent();
             }
-        }, 500);
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
     }
 
-    // 8. Инициализация
     window.addEventListener("load", function () {
         loadCookieYes();
-
-        // Изчакваме cookieyes да се инициализира
         setTimeout(() => {
-            loadScriptsBasedOnConsent(); // ако вече има съгласие
-            startConsentMonitor();       // следим за бъдещи промени
+            loadScriptsBasedOnConsent();  // ако вече има съгласие
+            observeConsentChange();       // ако ще бъде дадено тепърва
         }, 1000);
     });
 })();
