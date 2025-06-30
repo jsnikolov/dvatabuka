@@ -1,25 +1,23 @@
-(function () {
-    // 1. Зареждане на CookieYes с defer-like поведение
-    function loadCookieYes(callback) {
-        if (document.getElementById("cookieyes")) {
-            callback();
-            return;
-        }
+(function() {
+    // 1. Зареждане на CookieYes скрипта
+    function loadCookieYes() {
+        if (document.getElementById("cookieyes")) return;
 
         const script = document.createElement("script");
         script.id = "cookieyes";
         script.type = "text/javascript";
         script.src = "https://cdn-cookieyes.com/client_data/48089ea18522c94f7a3cc421/script.js";
-        script.defer = true; // <--- Ключово
-        script.onload = callback;
+        script.async = true;
         document.head.appendChild(script);
     }
 
+    // 2. Четене на бисквитка
     function getCookie(name) {
         const value = document.cookie.split('; ').find(row => row.startsWith(name + '='));
         return value ? decodeURIComponent(value.split('=')[1]) : null;
     }
 
+    // 3. Извличане на съгласие от cookieyes-consent
     function getConsentCategories() {
         const cookie = getCookie("cookieyes-consent");
         if (!cookie) return null;
@@ -35,6 +33,7 @@
         return categories;
     }
 
+    // 4. Utility: създаване на скриптове
     function createScript(src) {
         const s = document.createElement("script");
         s.type = "text/javascript";
@@ -58,6 +57,7 @@
 
     const addedScripts = new Set();
 
+    // 5. GTM
     function insertGTMscript() {
         if (addedScripts.has('gtm')) return;
         const script = document.createElement('script');
@@ -83,7 +83,9 @@
         document.body.insertBefore(iframe, document.body.firstChild);
     }
 
-    function loadScriptsBasedOnConsent(categories) {
+    // 6. Зареждане на скриптове според съгласие
+    function loadScriptsBasedOnConsent() {
+        const categories = getConsentCategories();
         if (!categories) return;
 
         if (categories.analytics) {
@@ -105,20 +107,28 @@
         });
     }
 
-    // 2. Инициализация
+    // 7. Следене на промяна в стойността на cookieyes-consent
+    function startConsentMonitor() {
+        let lastConsent = getCookie("cookieyes-consent");
+
+        const interval = setInterval(() => {
+            const currentConsent = getCookie("cookieyes-consent");
+
+            if (currentConsent && currentConsent !== lastConsent) {
+                lastConsent = currentConsent;
+                loadScriptsBasedOnConsent();
+            }
+        }, 500);
+    }
+
+    // 8. Инициализация
     window.addEventListener("load", function () {
-        loadCookieYes(() => {
-            // Проверяваме за съгласие на всеки 500ms, до максимум 10 секунди
-            let attempts = 0;
-            const intervalId = setInterval(() => {
-                const categories = getConsentCategories();
-                if (categories && Object.values(categories).some(v => v)) {
-                    clearInterval(intervalId);
-                    loadScriptsBasedOnConsent(categories);
-                } else if (++attempts > 20) {
-                    clearInterval(intervalId); // спираме след 10 секунди
-                }
-            }, 500);
-        });
+        loadCookieYes();
+
+        // Изчакваме cookieyes да се инициализира
+        setTimeout(() => {
+            loadScriptsBasedOnConsent(); // ако вече има съгласие
+            startConsentMonitor();       // следим за бъдещи промени
+        }, 1000);
     });
 })();
