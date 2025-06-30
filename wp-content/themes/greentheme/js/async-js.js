@@ -1,8 +1,7 @@
-(function() {
+(function () {
     // 1. Зареждане на CookieYes скрипта с onload callback
     function loadCookieYes(callback) {
         if (document.getElementById("cookieyes")) {
-            // Ако вече е зареден, директно callback
             callback();
             return;
         }
@@ -59,7 +58,6 @@
         ]
     };
 
-    // За да не се дублират скриптове, пазим добавените
     const addedScripts = new Set();
 
     // 5. GTM
@@ -88,7 +86,7 @@
         document.body.insertBefore(iframe, document.body.firstChild);
     }
 
-    // 6. Зареждане на скриптове според съгласие, без дублиране
+    // 6. Зареждане на скриптове според съгласие
     function loadScriptsBasedOnConsent() {
         const categories = getConsentCategories();
         if (!categories) return;
@@ -112,14 +110,26 @@
         });
     }
 
-    // 7. Инициализация: зареждаме CookieYes и слушаме за промяна в съгласията
+    // 7. Polling за първоначално съгласие
+    function waitForConsentCookieAndLoadScripts(interval = 500, maxAttempts = 20) {
+        let attempts = 0;
+        const checkConsent = setInterval(() => {
+            const categories = getConsentCategories();
+            if (categories) {
+                loadScriptsBasedOnConsent();
+                clearInterval(checkConsent);
+            }
+            if (++attempts >= maxAttempts) {
+                clearInterval(checkConsent);
+            }
+        }, interval);
+    }
+
+    // 8. Инициализация
     window.addEventListener("load", function () {
         loadCookieYes(() => {
-            // Първоначално зареждане на скриптове според съгласие
-            setTimeout(loadScriptsBasedOnConsent, 1000);
-
-            // Слушаме за актуализация на съгласията без презареждане
-            window.addEventListener("cookieyes_consent_update", loadScriptsBasedOnConsent);
+            waitForConsentCookieAndLoadScripts(); // проверка за първоначално съгласие
+            window.addEventListener("cookieyes_consent_update", loadScriptsBasedOnConsent); // при промяна
         });
     });
 })();
