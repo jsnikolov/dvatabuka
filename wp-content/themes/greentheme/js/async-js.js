@@ -1,5 +1,4 @@
 (function () {
-    // 1. Зареждане на CookieYes скрипта с onload callback
     function loadCookieYes(callback) {
         if (document.getElementById("cookieyes")) {
             callback();
@@ -14,13 +13,11 @@
         document.head.appendChild(script);
     }
 
-    // 2. Четене на бисквитка
     function getCookie(name) {
         const value = document.cookie.split('; ').find(row => row.startsWith(name + '='));
         return value ? decodeURIComponent(value.split('=')[1]) : null;
     }
 
-    // 3. Извличане на съгласие от cookieyes-consent
     function getConsentCategories() {
         const cookie = getCookie("cookieyes-consent");
         if (!cookie) return null;
@@ -36,7 +33,6 @@
         return categories;
     }
 
-    // 4. Utility: създаване на скриптове
     function createScript(src) {
         const s = document.createElement("script");
         s.type = "text/javascript";
@@ -60,7 +56,6 @@
 
     const addedScripts = new Set();
 
-    // 5. GTM
     function insertGTMscript() {
         if (addedScripts.has('gtm')) return;
         const script = document.createElement('script');
@@ -86,9 +81,7 @@
         document.body.insertBefore(iframe, document.body.firstChild);
     }
 
-    // 6. Зареждане на скриптове според съгласие
-    function loadScriptsBasedOnConsent() {
-        const categories = getConsentCategories();
+    function loadScriptsBasedOnConsent(categories) {
         if (!categories) return;
 
         if (categories.analytics) {
@@ -110,26 +103,37 @@
         });
     }
 
-    // 7. Polling за първоначално съгласие
-    function waitForConsentCookieAndLoadScripts(interval = 500, maxAttempts = 20) {
+    function monitorConsentChanges(pollInterval = 500, maxAttempts = 30) {
         let attempts = 0;
-        const checkConsent = setInterval(() => {
-            const categories = getConsentCategories();
-            if (categories) {
-                loadScriptsBasedOnConsent();
-                clearInterval(checkConsent);
+        let previousConsent = getConsentCategories();
+
+        const hasConsented = (c) => c && Object.values(c).some(v => v === true);
+
+        if (hasConsented(previousConsent)) {
+            loadScriptsBasedOnConsent(previousConsent);
+            return;
+        }
+
+        const interval = setInterval(() => {
+            const currentConsent = getConsentCategories();
+            if (currentConsent && hasConsented(currentConsent) && JSON.stringify(currentConsent) !== JSON.stringify(previousConsent)) {
+                loadScriptsBasedOnConsent(currentConsent);
+                clearInterval(interval);
             }
+            previousConsent = currentConsent;
             if (++attempts >= maxAttempts) {
-                clearInterval(checkConsent);
+                clearInterval(interval);
             }
-        }, interval);
+        }, pollInterval);
     }
 
-    // 8. Инициализация
     window.addEventListener("load", function () {
         loadCookieYes(() => {
-            waitForConsentCookieAndLoadScripts(); // проверка за първоначално съгласие
-            window.addEventListener("cookieyes_consent_update", loadScriptsBasedOnConsent); // при промяна
+            monitorConsentChanges();
+            window.addEventListener("cookieyes_consent_update", () => {
+                const categories = getConsentCategories();
+                loadScriptsBasedOnConsent(categories);
+            });
         });
     });
 })();
